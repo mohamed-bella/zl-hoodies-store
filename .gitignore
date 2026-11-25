@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.next-*/
+.env*
+!.env.example
+data/
+public/uploads/
+*.tsbuildinfo
+next-env.d.ts
+reference-assets/
+.asset-transfer/
+*.zip

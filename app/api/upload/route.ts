@@ -1,0 +1,6 @@
+import {NextRequest,NextResponse} from 'next/server';
+import {isAdmin,sameOrigin} from '@/lib/auth';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {randomUUID} from 'node:crypto';
+import path from 'node:path';
+export async function POST(req:NextRequest){if(!await isAdmin())return NextResponse.json({error:'Connexion requise.'},{status:401});if(!sameOrigin(req))return NextResponse.json({error:'Origine refusée.'},{status:403});const form=await req.formData();const file=form.get('file');if(!(file instanceof File)||file.size>5000000)return NextResponse.json({error:'Image requise, 5 Mo maximum.'},{status:400});const b=Buffer.from(await file.arrayBuffer());const ext=b.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))?'png':b[0]===255&&b[1]===216&&b[2]===255?'jpg':b.subarray(0,4).toString()==='RIFF'&&b.subarray(8,12).toString()==='WEBP'?'webp':null;if(!ext)return NextResponse.json({error:'Formats acceptés : PNG, JPEG, WebP.'},{status:400});const name=randomUUID()+'.'+ext;const dir=path.join(path.resolve(/* turbopackIgnore: true */process.env.DATA_DIR||'./data'),'uploads');await mkdir(dir,{recursive:true});await writeFile(path.join(dir,name),b);return NextResponse.json({url:'/media/'+name});}

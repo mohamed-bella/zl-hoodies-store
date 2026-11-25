@@ -1,0 +1,31 @@
+{
+  "name": "derb-streetwear",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 0.0.0.0",
+    "build": "next build",
+    "start": "next start --hostname 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "dependencies": {
+    "next": "16.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "lucide-react": "^1.72.0",
+    "zod": "^4.6.7",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@netlify/plugin-nextjs": "5.16.9",
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/three": "0.186.0"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
